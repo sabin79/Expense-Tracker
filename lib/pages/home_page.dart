@@ -16,7 +16,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   // text controller
   final newExpenseNameController = TextEditingController();
-  final newExpenseAmountController = TextEditingController();
+  final newExpensedollarController = TextEditingController();
+  final newExpensecentsController = TextEditingController();
+
   // add new expense
   void addNewExpense() {
     showDialog(
@@ -30,11 +32,33 @@ class _HomePageState extends State<HomePage> {
               //expense name
               TextField(
                 controller: newExpenseNameController,
+                decoration: const InputDecoration(
+                  hintText: "Expense name",
+                ),
               ),
               // expense amount
-              TextField(
-                controller: newExpenseAmountController,
-              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: newExpensedollarController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        hintText: "dollars",
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: TextField(
+                      controller: newExpensecentsController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        hintText: "Cents",
+                      ),
+                    ),
+                  )
+                ],
+              )
             ],
           ),
           // save button
@@ -56,9 +80,12 @@ class _HomePageState extends State<HomePage> {
 
   // save
   void save() {
+    // put dollars and cents together and convert to double
+    String amount =
+        '${newExpensedollarController.text}.${newExpensecentsController.text}';
     ExpenseItem newExpense = ExpenseItem(
       name: newExpenseNameController.text,
-      amount: newExpenseAmountController.text,
+      amount: amount,
       dateTime: DateTime.now(),
     );
     Provider.of<ExpenseData>(context, listen: false).addnewExpense(newExpense);
@@ -75,7 +102,8 @@ class _HomePageState extends State<HomePage> {
 
   void clear() {
     newExpenseNameController.clear();
-    newExpenseAmountController.clear();
+    newExpensedollarController.clear();
+    newExpensecentsController.clear();
   }
 
   @override
@@ -84,11 +112,20 @@ class _HomePageState extends State<HomePage> {
       return Scaffold(
           backgroundColor: Colors.grey[300],
           floatingActionButton: FloatingActionButton(
-              onPressed: addNewExpense, child: const Icon(Icons.add)),
+            onPressed: addNewExpense,
+            backgroundColor: Colors.black,
+            child: const Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+          ),
           body: ListView(
             children: [
               // weekly summery
               ExpenseSummery(StartOfWeek: value.startOFWeekDate()),
+              const SizedBox(
+                height: 20,
+              ),
               // expenses list
               ListView.builder(
                   itemCount: value.getAllExpenselist().length,
