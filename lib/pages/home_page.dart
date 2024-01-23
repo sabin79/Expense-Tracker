@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                   hintText: "Expense name",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(
-                      Radius.circular(25),
+                      Radius.circular(15),
                     ),
                   ),
                 ),
@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                         hintText: "dollars",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
-                            Radius.circular(15),
+                            Radius.circular(8),
                           ),
                         ),
                       ),
@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                         hintText: "Cents",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
-                            Radius.circular(15),
+                            Radius.circular(8),
                           ),
                         ),
                       ),

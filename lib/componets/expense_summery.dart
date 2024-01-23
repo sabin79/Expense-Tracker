@@ -108,7 +108,7 @@ class ExpenseSummery extends StatelessWidget {
                           fontSize: 16,
                         ),
                       ),
-                      Text('\$${calcualteWeekTotal(
+                      Text('Rs.${calcualteWeekTotal(
                         value,
                         sunday,
                         monday,
