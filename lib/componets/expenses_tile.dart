@@ -24,6 +24,7 @@ class ExpenseTile extends StatelessWidget {
             onPressed: deleteTapped,
             icon: Icons.delete,
             backgroundColor: Colors.red.shade400,
+            borderRadius: BorderRadius.circular(8),
           ),
         ],
       ),

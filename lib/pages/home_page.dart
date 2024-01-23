@@ -34,6 +34,7 @@ class _HomePageState extends State<HomePage> {
       builder: (context) {
         return AlertDialog(
           title: const Text("Add new expense"),
+          backgroundColor: Colors.green[200],
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -42,7 +43,15 @@ class _HomePageState extends State<HomePage> {
                 controller: newExpenseNameController,
                 decoration: const InputDecoration(
                   hintText: "Expense name",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(25),
+                    ),
+                  ),
                 ),
+              ),
+              const SizedBox(
+                height: 7,
               ),
               // expense amount
               Row(
@@ -53,15 +62,26 @@ class _HomePageState extends State<HomePage> {
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
                         hintText: "dollars",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                        ),
                       ),
                     ),
                   ),
+                  const Text('.'),
                   Expanded(
                     child: TextField(
                       controller: newExpensecentsController,
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
                         hintText: "Cents",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                        ),
                       ),
                     ),
                   )
@@ -129,7 +149,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Consumer<ExpenseData>(builder: (context, value, child) {
       return Scaffold(
-          backgroundColor: Colors.grey[300],
+          backgroundColor: Colors.green[300],
           floatingActionButton: FloatingActionButton(
             onPressed: addNewExpense,
             backgroundColor: Colors.black,
