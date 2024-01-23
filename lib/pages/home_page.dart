@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   // text controller
   final newExpenseNameController = TextEditingController();
   final newExpensedollarController = TextEditingController();
-  final newExpensecentsController = TextEditingController();
+//  final newExpensecentsController = TextEditingController();
 
   @override
   void initState() {
@@ -70,21 +70,21 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  const Text('.'),
-                  Expanded(
-                    child: TextField(
-                      controller: newExpensecentsController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        hintText: "Cents",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(8),
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
+                  // const Text('.'),
+                  // Expanded(
+                  //   child: TextField(
+                  //     controller: newExpensecentsController,
+                  //     keyboardType: TextInputType.number,
+                  //     decoration: const InputDecoration(
+                  //       hintText: "Cents",
+                  //       border: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.all(
+                  //           Radius.circular(8),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // )
                 ],
               )
             ],
@@ -116,10 +116,9 @@ class _HomePageState extends State<HomePage> {
     // only save exxpense if all field are filled
     // put dollars and cents together and convert to double
     if (newExpenseNameController.text.isNotEmpty &&
-        newExpensedollarController.text.isNotEmpty &&
-        newExpensecentsController.text.isNotEmpty) {
-      String amount =
-          '${newExpensedollarController.text}.${newExpensecentsController.text}';
+        newExpensedollarController.text.isNotEmpty) {
+      //  newExpensecentsController.text.isNotEmpty) {
+      String amount = newExpensedollarController.text;
       ExpenseItem newExpense = ExpenseItem(
         name: newExpenseNameController.text,
         amount: amount,
@@ -142,7 +141,7 @@ class _HomePageState extends State<HomePage> {
   void clear() {
     newExpenseNameController.clear();
     newExpensedollarController.clear();
-    newExpensecentsController.clear();
+    //   newExpensecentsController.clear();
   }
 
   @override
