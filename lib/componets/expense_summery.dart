@@ -44,6 +44,33 @@ class ExpenseSummery extends StatelessWidget {
     return max == 0 ? 100 : max;
   }
 
+  // calcumate the week total
+  String calcualteWeekTotal(
+    ExpenseData value,
+    String sunday,
+    String monday,
+    String tuesday,
+    String wednesday,
+    String thrusday,
+    String friday,
+    String saturday,
+  ) {
+    List<double> values = [
+      value.calculateDailyExpenseSummery()[sunday] ?? 0,
+      value.calculateDailyExpenseSummery()[monday] ?? 0,
+      value.calculateDailyExpenseSummery()[tuesday] ?? 0,
+      value.calculateDailyExpenseSummery()[wednesday] ?? 0,
+      value.calculateDailyExpenseSummery()[thrusday] ?? 0,
+      value.calculateDailyExpenseSummery()[friday] ?? 0,
+      value.calculateDailyExpenseSummery()[saturday] ?? 0,
+    ];
+    double total = 0;
+    for (var i = 0; i < values.length; i++) {
+      total += values[i];
+    }
+    return total.toStringAsFixed(2);
+  }
+
   @override
   Widget build(BuildContext context) {
     String sunday =
@@ -66,27 +93,64 @@ class ExpenseSummery extends StatelessWidget {
         convertDateTimeToString(startOfWeek.add(const Duration(days: 6)));
 
     return Consumer<ExpenseData>(
-        builder: (context, value, child) => SizedBox(
-              height: 200,
-              child: MyBarGraph(
-                maxY: calcumateMax(
-                  value,
-                  sunday,
-                  monday,
-                  tuesday,
-                  wednesday,
-                  thrusday,
-                  friday,
-                  saturday,
+        builder: (context, value, child) => Column(
+              children: [
+                // weak total
+
+                Padding(
+                  padding: const EdgeInsets.all(25.0),
+                  child: Row(
+                    children: [
+                      const Text(
+                        "Week total: ",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      Text('\$${calcualteWeekTotal(
+                        value,
+                        sunday,
+                        monday,
+                        tuesday,
+                        wednesday,
+                        thrusday,
+                        friday,
+                        saturday,
+                      )}')
+                    ],
+                  ),
                 ),
-                sunAmount: value.calculateDailyExpenseSummery()[sunday] ?? 0,
-                monAmount: value.calculateDailyExpenseSummery()[monday] ?? 0,
-                tueAmount: value.calculateDailyExpenseSummery()[tuesday] ?? 0,
-                wedAmount: value.calculateDailyExpenseSummery()[wednesday] ?? 0,
-                thrAmount: value.calculateDailyExpenseSummery()[thrusday] ?? 0,
-                friAMount: value.calculateDailyExpenseSummery()[friday] ?? 0,
-                satAmount: value.calculateDailyExpenseSummery()[saturday] ?? 0,
-              ),
+                SizedBox(
+                  height: 200,
+                  child: MyBarGraph(
+                    maxY: calcumateMax(
+                      value,
+                      sunday,
+                      monday,
+                      tuesday,
+                      wednesday,
+                      thrusday,
+                      friday,
+                      saturday,
+                    ),
+                    sunAmount:
+                        value.calculateDailyExpenseSummery()[sunday] ?? 0,
+                    monAmount:
+                        value.calculateDailyExpenseSummery()[monday] ?? 0,
+                    tueAmount:
+                        value.calculateDailyExpenseSummery()[tuesday] ?? 0,
+                    wedAmount:
+                        value.calculateDailyExpenseSummery()[wednesday] ?? 0,
+                    thrAmount:
+                        value.calculateDailyExpenseSummery()[thrusday] ?? 0,
+                    friAMount:
+                        value.calculateDailyExpenseSummery()[friday] ?? 0,
+                    satAmount:
+                        value.calculateDailyExpenseSummery()[saturday] ?? 0,
+                  ),
+                ),
+              ],
             ));
   }
 }

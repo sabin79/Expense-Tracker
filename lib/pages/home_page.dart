@@ -86,17 +86,28 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // delete expense
+  void deleteExpense(ExpenseItem expense) {
+    Provider.of<ExpenseData>(context, listen: false).deleteExpense(expense);
+  }
+
   // save
   void save() {
+    // only save exxpense if all field are filled
     // put dollars and cents together and convert to double
-    String amount =
-        '${newExpensedollarController.text}.${newExpensecentsController.text}';
-    ExpenseItem newExpense = ExpenseItem(
-      name: newExpenseNameController.text,
-      amount: amount,
-      dateTime: DateTime.now(),
-    );
-    Provider.of<ExpenseData>(context, listen: false).addnewExpense(newExpense);
+    if (newExpenseNameController.text.isNotEmpty &&
+        newExpensedollarController.text.isNotEmpty &&
+        newExpensecentsController.text.isNotEmpty) {
+      String amount =
+          '${newExpensedollarController.text}.${newExpensecentsController.text}';
+      ExpenseItem newExpense = ExpenseItem(
+        name: newExpenseNameController.text,
+        amount: amount,
+        dateTime: DateTime.now(),
+      );
+      Provider.of<ExpenseData>(context, listen: false)
+          .addnewExpense(newExpense);
+    }
 
     Navigator.pop(context);
     clear();
@@ -129,10 +140,13 @@ class _HomePageState extends State<HomePage> {
           ),
           body: ListView(
             children: [
-              // weekly summery
-              ExpenseSummery(StartOfWeek: value.startOFWeekDate()),
               const SizedBox(
-                height: 20,
+                height: 12,
+              ),
+              // weekly summery
+              ExpenseSummery(startOfWeek: value.startOFWeekDate()),
+              const SizedBox(
+                height: 12,
               ),
               // expenses list
               ListView.builder(
@@ -144,6 +158,8 @@ class _HomePageState extends State<HomePage> {
                       name: value.overallExpenseList[index].name,
                       amount: value.getAllExpenselist()[index].amount,
                       datetime: value.getAllExpenselist()[index].dateTime,
+                      deleteTapped: (p0) =>
+                          deleteExpense(value.getAllExpenselist()[index]),
                     );
                   }),
             ],
