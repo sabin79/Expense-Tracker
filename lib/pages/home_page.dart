@@ -1,9 +1,10 @@
+import 'package:expense_tracker/componets/expense_summery.dart';
 import 'package:expense_tracker/data/expense_data.dart';
 import 'package:expense_tracker/models/expense_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'componets/expenses_tile.dart';
+import '../componets/expenses_tile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -87,7 +88,7 @@ class _HomePageState extends State<HomePage> {
           body: ListView(
             children: [
               // weekly summery
-
+              ExpenseSummery(StartOfWeek: value.startOFWeekDate()),
               // expenses list
               ListView.builder(
                   itemCount: value.getAllExpenselist().length,
