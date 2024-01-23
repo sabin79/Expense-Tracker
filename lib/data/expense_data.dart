@@ -102,8 +102,7 @@ class ExpenseData extends ChangeNotifier {
     };
     for (var expense in overallExpenseList) {
       String date = convertDateTimeToString(expense.dateTime);
-      double amount = expense.amount;
-
+      double amount = double.parse(expense.amount);
       if (dailyExpenseSummery.containsKey(date)) {
         double currentAmount = dailyExpenseSummery[date]!;
         currentAmount += amount;

@@ -1,6 +1,6 @@
 class ExpenseItem {
   final String name;
-  final double amount;
+  final String amount;
   final DateTime dateTime;
 
   ExpenseItem({

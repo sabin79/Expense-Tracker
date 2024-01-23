@@ -3,6 +3,8 @@ import 'package:expense_tracker/models/expense_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'componets/expenses_tile.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -53,27 +55,20 @@ class _HomePageState extends State<HomePage> {
 
   // save
   void save() {
-    String expenseName = newExpenseNameController.text;
-    String expenseAmountString = newExpenseAmountController.text;
+    ExpenseItem newExpense = ExpenseItem(
+      name: newExpenseNameController.text,
+      amount: newExpenseAmountController.text,
+      dateTime: DateTime.now(),
+    );
+    Provider.of<ExpenseData>(context, listen: false).addnewExpense(newExpense);
 
-    // Check if the expense amount is a valid double
-    if (double.tryParse(expenseAmountString) != null) {
-      double expenseAmount = double.parse(expenseAmountString);
-
-      ExpenseItem newExpense = ExpenseItem(
-        name: expenseName,
-        amount: expenseAmount,
-        dateTime: DateTime.now(),
-      );
-// add this new expense
-      Provider.of<ExpenseData>(context, listen: false)
-          .addnewExpense(newExpense);
-    }
+    Navigator.pop(context);
     clear();
   }
 
   // cancel
   void cancel() {
+    Navigator.pop(context);
     clear();
   }
 
@@ -84,25 +79,29 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ExpenseData>(
-      builder: ((context, value, child) => Scaffold(
-            backgroundColor: Colors.grey[300],
-            floatingActionButton: FloatingActionButton(
-              onPressed: addNewExpense,
-              child: const Icon(Icons.add),
-            ),
-            body: ListView.builder(
-                itemCount: value.getAllExpenselist().length,
-                itemBuilder: ((context, index) => ListTile(
-                      title: Text(
-                        value.getAllExpenselist()[index].name,
-                      ),
-                      subtitle: Text(
-                          value.getAllExpenselist()[index].dateTime.toString()),
-                      trailing:
-                          Text("\$${value.getAllExpenselist()[index].amount}"),
-                    ))),
-          )),
-    );
+    return Consumer<ExpenseData>(builder: (context, value, child) {
+      return Scaffold(
+          backgroundColor: Colors.grey[300],
+          floatingActionButton: FloatingActionButton(
+              onPressed: addNewExpense, child: const Icon(Icons.add)),
+          body: ListView(
+            children: [
+              // weekly summery
+
+              // expenses list
+              ListView.builder(
+                  itemCount: value.getAllExpenselist().length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return ExpenseTile(
+                      name: value.overallExpenseList[index].name,
+                      amount: value.getAllExpenselist()[index].amount,
+                      datetime: value.getAllExpenselist()[index].dateTime,
+                    );
+                  }),
+            ],
+          ));
+    });
   }
 }
